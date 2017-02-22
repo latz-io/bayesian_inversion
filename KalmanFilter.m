@@ -15,7 +15,7 @@ G = fliplr((1:1:t)/(t+1));
 G = diag(G);
 
 %Likelihood is centred Gaussian with Variance = gamma2.
-gamma2 = 0.1;
+gamma2 = 2;
 
 % Generate Data
 true = 4;  %true value = 2.
@@ -42,13 +42,13 @@ plot(x,y(1,:));
 hold on;
 for i = 2:t
     mu(i) = (mu(i-1)/sigma(i-1) + (data(i)/G(i,i))/(gamma2/G(i,i)^2))/(1/sigma(i-1) + (G(i,i)^2)/gamma2);
-    sigma(i) = (1/sigma(i-1) + G(i,i)^2/gamma2);
+    sigma(i) = 1/(1/sigma(i-1) + G(i,i)^2/gamma2);
     y(i,:) = normpdf(x, mu(i), sqrt(sigma(i)));
     if mod(i,n)== 0
         plot(x,y(i,:)); %Plot only 10 intermediate distributions.
     end
 end
-plot(true*ones(1,size(0:0.01:0.5)),0:0.01:0.5);
+plot(true*ones(size(0:0.01:max(max(y)))),0:0.01:max(max(y)));
 legend('1','2','3','4','5','6','7','8','9','10','u=2');
 
 hold off;
