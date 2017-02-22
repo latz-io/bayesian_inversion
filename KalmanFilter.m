@@ -48,7 +48,7 @@ for i = 2:t
         plot(x,y(i,:)); %Plot only 10 intermediate distributions.
     end
 end
-plot(ones(1,size(0:0.01:0.5,true)),0:0.01:0.5);
+plot(true*ones(1,size(0:0.01:0.5)),0:0.01:0.5);
 legend('1','2','3','4','5','6','7','8','9','10','u=2');
 
 hold off;

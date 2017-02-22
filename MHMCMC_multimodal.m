@@ -18,7 +18,7 @@ propsigma = 5; % Works
 x_start = 0;
 
 % Number of generated samples
-N = 10000;
+N = 100000;
 
 %% Some Initialisations
 

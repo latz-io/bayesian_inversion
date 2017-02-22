@@ -36,7 +36,7 @@ w = w/Norm;
 % that can be downloaded:
 % https://de.mathworks.com/matlabcentral/fileexchange/58450-histwv-v--w--min--max--bins-/content/histwv.m
 figure(5)
-X_vals = min(X):0.75:max(X);
+X_vals = min(X):0.5:max(X);
 [histw, intervals] = histwv(X',w',min(X),max(X),length(X_vals));
 bar(X_vals,histw)
 hold on
@@ -44,8 +44,7 @@ x = min(X):0.05:max(X);
 y = tpdf(x,k);
 plot(x,y);
 hold off
-figure(2)
-histfit(X,100,'t')
+
 
 
 %% Return the relative error

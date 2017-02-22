@@ -22,7 +22,8 @@ X = trnd(k,[N,1]);
 Y= X.^2;
 w = normpdf(X,0,1)./tpdf(X,3);
 
-Est = sum(Y.*w)/sum(w);
+w = w/sum(w);
+Est = sum(Y.*w);
 %% Plot
 % Plot requires the function histwv.m 
 % (Copyright (c) 2016, Brent All rights reserved.) 
@@ -30,16 +31,15 @@ Est = sum(Y.*w)/sum(w);
 % https://de.mathworks.com/matlabcentral/fileexchange/58450-histwv-v--w--min--max--bins-/content/histwv.m
 
 figure(4)
-X_vals = min(X):0.75:max(X);
+X_vals = min(X):0.5:max(X);
 [histw, intervals] = histwv(X',w',min(X),max(X),length(X_vals));
 bar(X_vals,histw)
 hold on
 x = min(X):0.05:max(X);
 y = tpdf(x,k);
-plot(x,y);
+plot(x,y,'Linewidth',1.2);
 hold off
-figure(2)
-histfit(X,100,'t')
+
 
 
 %% Return the relative error

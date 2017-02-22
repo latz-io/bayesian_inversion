@@ -55,8 +55,8 @@ subplot(1,2,1)
 plot(X)
 
 subplot(1,2,2)
-h=histogram(X,'Normalization','probability');
-h.NumBins = 20;
+h=histogram(X(-10 < X <10),'Normalization','probability');
+h.NumBins = 40;
 hold on
 y = -10:0.1:10;
 f = tpdf(y,n);
