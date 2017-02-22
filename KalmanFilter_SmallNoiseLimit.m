@@ -15,12 +15,12 @@ G = fliplr((1:1:t)/(t+1));
 G = diag(G);
 
 %Likelihood is centred Gaussian with Variance = gamma2.
-gamma2 = 2;
+gamma2 = 1./(1:1:t);
 
 % Generate Data
 true = 4;  %true value = 2.
 x_true = true*ones(t,1);
-data = G*x_true + normrnd(0,sqrt(gamma2),t,1);
+data = G*x_true + mvnrnd(zeros(length(gamma2),1),diag(gamma2))';
 
 % The intermediate distributions are Gaussian and can thus be
 % represented by their mean and variances.
@@ -29,7 +29,7 @@ sigma = zeros(t,1);
 
 % Prior:
 mu(1) = -2;
-sigma(1) = 25;
+sigma(1) = 5;
 
 
 % Plot the intermediate distributions.
@@ -41,21 +41,23 @@ figure(2)
 plot(x,y(1,:));
 hold on;
 for i = 2:t
-    mu(i) = (mu(i-1)/sigma(i-1) + (data(i)/G(i,i))/(gamma2/G(i,i)^2))/(1/sigma(i-1) + (G(i,i)^2)/gamma2);
-    sigma(i) = 1/(1/sigma(i-1) + G(i,i)^2/gamma2);
+    mu(i) = (mu(i-1)/sigma(i-1) + (data(i)/G(i,i))/(gamma2(i)/G(i,i)^2))/(1/sigma(i-1) + (G(i,i)^2)/gamma2(i));
+    sigma(i) = 1/(1/sigma(i-1) + G(i,i)^2/gamma2(i));
     y(i,:) = normpdf(x, mu(i), sqrt(sigma(i)));
     if mod(i,n)== 0
         plot(x,y(i,:)); %Plot only 10 intermediate distributions.
     end
 end
-plot(true*ones(size(0:0.01:max(max(y)))),0:0.01:max(max(y)));
+plot(true*ones(size(0:0.01:0.5)),0:0.01:0.5);
 legend('1','2','3','4','5','6','7','8','9','10','u=2');
 
 hold off;
 
-
 %plot the sigmas
 figure(3)
 plot(sigma)
+
+
+
 
 
